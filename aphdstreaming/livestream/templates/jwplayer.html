@@ -1,0 +1,25 @@
+{% load staticfiles i18n %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>JW player</title>
+    <script src="{% static 'jw.js' %}"></script>
+  </head>
+  <body>
+  <div id="jw">
+
+  </div>
+  <script type="text/javascript">
+   function autorun()
+   {
+     jwplayer('jw').setup ({
+       file: '{{hlsurl}}'
+   });
+   }
+   if (window.addEventListener) window.addEventListener("load", autorun, false);
+   else if (window.attachEvent) window.attachEvent("onload", autorun);
+   else window.onload = autorun;
+  </script>
+  </body>
+</html>

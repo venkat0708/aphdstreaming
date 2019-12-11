@@ -1,0 +1,186 @@
+{% load staticfiles i18n %}<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>{{event.Studio}}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <![endif]-->
+    <link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.ico' %}"/>
+    {% block css %}
+    <!-- Latest compiled and minified Bootstrap 4 Alpha 4 CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="https://unpkg.com/video.js/dist/video-js.css" rel="stylesheet">
+    <script src="{% static 'jw.js' %}"></script>
+
+    <!-- Your stuff: Third-party CSS libraries go here -->
+
+    <!-- This file stores project-specific CSS -->
+    <link href="{% static 'css/project.css' %}" rel="stylesheet">
+
+    {% endblock %}
+
+  </head>
+
+<body height: 100%;>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="card">
+          <div class="card-header bg-primary">
+            <h3 class="display-4 text-center">{{event.Studio}} </h1>
+          </div>
+          <div class="card-body">
+
+            <div class="row text-center">
+            {% if event.Bride_Img %}
+              {% if event.Groom_Img %}
+              <div class="col-lg-4 col-md-6 mb-4">
+                  <div class="card">
+                    <img class="card-img-top" src="{{ MEDIA_URL }}/{{event.Bride_Img}}" alt="">
+                    <div class="card-body">
+                      <h4 class="card-title">{{event.Bride}}</h4>
+                    </div>
+                  </div>
+                </div>
+
+              <div class="col-lg-4 col-md-6 mb-4 align-self-center">
+                  <div class="card border-0">
+                    <img class="card-img-top rounded-circle" src="{% static 'images/weds.jpeg' %}" alt="">
+                    <div class="card-body">
+                      <h4 class="card-title">{{ event.Message }}</h4>
+                      <p class="card-text">{{event.time}}</p>
+                    </div>
+                  </div>
+                </div>
+
+              <div class="col-lg-4 col-md-6 mb-4">
+                  <div class="card">
+                    <div id="logo"><img class="card-img-top img-responsive" src="{{ MEDIA_URL }}/{{event.Groom_Img}}" alt=""></div>
+                    <div class="card-body">
+                      <h4 class="card-title">{{event.Groom}}</h4>
+                    </div>
+                  </div>
+                </div>
+            {% endif %}
+            {% endif %}
+
+            </div>
+        {% if event.images.all %}
+          <div id="demo" class="carousel slide" data-ride="carousel">
+
+            <!-- Indicators -->
+            <ul class="carousel-indicators">
+              <li data-target="#demo" data-slide-to="0" class="active"></li>
+              {% for i in event.images.all %}
+              <li data-target="#demo" data-slide-to="{{forloop.counter}}"></li>
+              {% endfor %}
+            </ul>
+
+            <!-- The slideshow -->
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <img src="{{ MEDIA_URL }}/{{event.Poster_Img}}" alt="" width="1100" height="500">
+              </div>
+              {% for i in event.images.all %}
+              <div class="carousel-item">
+                <img src="{{ MEDIA_URL }}/{{i.photo}}" alt="" width="1100" height="500">
+              </div>
+              {% endfor %}
+            </div>
+
+            <!-- Left and right controls -->
+            <a class="carousel-control-prev" href="#demo" data-slide="prev">
+              <span class="carousel-control-prev-icon"></span>
+            </a>
+            <a class="carousel-control-next" href="#demo" data-slide="next">
+              <span class="carousel-control-next-icon"></span>
+            </a>
+          </div>
+        {% endif %}
+          <br><br>
+          <!--
+            <div class="row align-items-center justify-content-center">
+              <video id="rtmp-media-player" width=960 height=400 class="video-js vjs-default-skin vjs-big-play-centered vjs-fluid" controls preload="auto" playsInline
+                poster="{{ MEDIA_URL }}/{{event.Poster_Img}}">
+                <source
+                  src="{{ rtmpurl }}"
+                  type="rtmp/mp4">
+              </video>
+            </div>
+          -->
+          <div class="row align-items-center justify-content-center">
+            <video id="rtmp-media-player" width=960 height=400 class="video-js vjs-default-skin vjs-big-play-centered vjs-fluid" controls preload="auto" playsInline
+              poster="{{ MEDIA_URL }}/{{event.Poster_Img}}">
+              <source
+                src="{{ hlsurl }}"
+                type="application/x-mpegURL">
+            </video>
+          </div>
+        </div>
+      </div>
+      <div class="text-center bg-secondary">
+        <footer>
+        <h1>{{event.Studio}}</h1>
+        <h1>{{event.studio_person}}</h1>
+        <h2>{{event.studio_phone}}</h2>
+        <h3> <a href="mailto:{{evet.studio_email}}">{{event.studio_email}}</a></h3>
+      </footer>
+      <div id="jwplayerdiv" width=960 height=400 >
+
+      </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+  {% block javascript %}
+    <!-- Required by Bootstrap v4 Alpha 4 -->
+    <script src="https://use.fontawesome.com/640bd40708.js"></script>
+<!--      <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script> -->
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <!-- Your stuff: Third-party javascript libraries go here -->
+    <script src="https://unpkg.com/video.js/dist/video.js"></script>
+    <script src="https://unpkg.com/videojs-contrib-hls/dist/videojs-contrib-hls.js"></script>
+
+    <!--
+    <script src="https://unpkg.com/videojs-flash/dist/videojs-flash.js"></script>
+  -->
+
+    <script>
+    $('.carousel').carousel();
+
+      (function(window, videojs) {
+        var player = window.player = videojs('rtmp-media-player', {liveui: true});
+
+      }(window, window.videojs));
+
+
+
+    </script>
+
+
+    <script>
+    jwplayer('jwplayerdiv').setup ({
+      file: '{{hlsurl}}'
+  });
+  </script>
+
+    <!-- place project specific Javascript in this file -->
+
+    <script src="{% static 'js/project.js' %}"></script>
+
+
+  {% endblock javascript %}
+</body>
+</html>

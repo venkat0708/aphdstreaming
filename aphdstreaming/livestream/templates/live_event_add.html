@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+
+Add Live Event
+
+{% endblock %}
+{% block additionalcss %}
+
+<!-- XDSoft DateTimePicker -->
+<link rel="stylesheet" href="{% static 'datetimepicker-2.5.20/jquery.datetimepicker.min.css' %}">
+
+{% endblock %}
+{% block content %}
+<div class="container">
+
+  <div class="row">
+    <div class="col-sm-12">
+
+      <h2>Add Live Event</h2>
+     <form action="." method="POST" enctype="multipart/form-data" autocomplete="off" >
+    	{% csrf_token %}
+    	{% crispy form %}
+    	<input type="submit" value="Submit" class="btn btn-primary">
+    	<a href="{{ request.META.HTTP_REFERER }}"><button type="button" class="btn btn-secondary">Cancel</button></a>
+	</form>
+
+    </div>
+  </div>
+
+
+</div>
+{% endblock content %}
+
+{% block additionaljs %}
+<script src="{% static 'datetimepicker-2.5.20/jquery.datetimepicker.full.min.js' %}"></script>
+{% endblock %}

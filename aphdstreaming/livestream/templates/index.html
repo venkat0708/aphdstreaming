@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}
+
+Live Stream
+
+{% endblock %}
+
+
+
+{% block content %}
+<div class="container">
+
+  <div class="row">
+    <div class="col-sm-12">
+
+      <h2>list of events</h2>
+      <br/>
+      <a href="{% url 'livestream:Live_Event_Add' %}"><button type="button" class="btn btn-primary">Add Event</button></a>
+      <hr/>
+  <div class="table-responsive">
+     <table id="eventsTable" class="table table-striped">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Bride</th>
+          <th>Groom</th>
+          <th>Start Date</th>
+          <th>Stream key</th>
+          <th>Link</th>
+
+        </tr>
+      </thead>
+      <tbody>
+      {% for e in events %}
+        <tr>
+          <th scope="row">{{ forloop.counter }}</th>
+          <td>{{ e.Bride }}</td>
+          <td>{{ e.Groom }}</td>
+          <td>{{ e.start_date_time }}</td>
+          <td>{{ e.Stream_Key }}</td>
+          <td><a href="{% url 'livestream:Event' e.id %}">https://aphdstreaming.in{% url 'livestream:Event' e.id %}{{e}}</a></td>
+
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+    </div>
+  </div>
+
+
+
+
+
+</div>
+{% endblock content %}
+
+{% block additionaljs %}
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.js"></script>
+<script type="text/javascript">
+$(document).ready( function () {
+    $('#eventsTable').dataTable( {
+  "pageLength": 50
+} );
+} );
+</script>
+
+{% endblock %}
